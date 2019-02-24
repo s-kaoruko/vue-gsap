@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import CircleMotion from "./views/CircleMotion.vue";
+import CircleRotation from "./views/CircleRotation.vue";
 
 Vue.use(Router);
 
@@ -16,6 +17,11 @@ export default new Router({
       path: "/circle-motion",
       name: "circle-motion",
       component: CircleMotion
+    },
+    {
+      path: "/circle-rotation",
+      name: "circle-rotation",
+      component: CircleRotation
     }
   ]
 });
