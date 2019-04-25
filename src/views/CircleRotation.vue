@@ -5,60 +5,41 @@
 
     <div class="circle-box">
       <div class="box">
-        <div class="box-item _red" ref="circle" :style="style1"></div>
+        <div class="box-item _red" ref="circle" :style="perspective1"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { TimelineMax, Power0 } from "gsap";
+import { TimelineMax, Circ } from "gsap";
 export default {
   mounted() {
-    let timeline;
+    let perspective;
     this.$refs.play.addEventListener("click", () => {
       if (this.hadPause) {
-        timeline.play();
+        perspective.play();
       } else {
-        timeline = new TimelineMax({ repeat: -1 });
-        timeline
-          .to(this.$refs.circle, 0.6, this.style2)
-          .to(this.$refs.circle, 0.6, this.style3)
-          .to(this.$refs.circle, 0.6, this.style4)
-          .to(this.$refs.circle, 0.6, this.style1);
+        perspective = new TimelineMax({ repeat: -1 });
+        perspective
+          .to(this.$refs.circle, 1.0, this.perspective2)
+          .to(this.$refs.circle, 1.0, this.perspective1);
       }
     });
     this.$refs.pause.addEventListener("click", () => {
-      timeline.pause();
+      perspective.pause();
       this.hadPause = true;
     });
   },
   data() {
     return {
-      style1: {
-        top: "20px",
-        transform: "scale(2)",
-        // TODO: 円周をぐるぐる回ってる感がないのはeasingのせいなのか
-        // ease: Circ.easeIn
-        ease: Power0.easeNone
+      perspective1: {
+        transform: "perspective(100px) translateZ(0px)",
+        ease: Circ.easeIn
       },
-      style2: {
-        top: "110px",
-        transform: "scale(4)",
-        // ease: Circ.easeOut
-        ease: Power0.easeNone
-      },
-      style3: {
-        top: "240px",
-        transform: "scale(2)",
-        // ease: Circ.easeIn
-        ease: Power0.easeNone
-      },
-      style4: {
-        top: "110px",
-        transform: "scale(1)",
-        // ease: Circ.easeOut
-        ease: Power0.easeNone
+      perspective2: {
+        transform: "perspective(100px) translateZ(50px)",
+        ease: Circ.easeOut
       },
       hadPause: false
     };
@@ -75,7 +56,6 @@ $blue: #2348f3;
   position: relative;
   &-box {
     position: absolute;
-    top: calc(50% - 150px);
     left: calc(50% - 150px);
   }
 }
@@ -85,7 +65,6 @@ $blue: #2348f3;
   height: 300px;
   box-sizing: border-box;
   position: relative;
-  // border: 1px solid #fff;
   padding: 20px;
   &-item {
     width: 40px;
